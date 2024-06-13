@@ -12,22 +12,32 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    npm
 
 # Instale extensões PHP necessárias
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
+
+# Instala o Node.js e o npm
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs
+
 # Instale Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Defina o diretório de trabalho
+
+# Define o diretório de trabalho
 WORKDIR /var/www
 
-# Copie os arquivos do projeto
+# Copia os arquivos do projeto para o contêiner
 COPY . .
 
-# Instale as dependências do Composer
+# Instala as dependências do PHP
 RUN composer install --prefer-dist --no-scripts --no-interaction
+
+# Instala as dependências do NPM
+RUN npm install 
 
 # Copie o arquivo de configuração do PHP-FPM
 COPY ./docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
@@ -35,7 +45,6 @@ COPY ./docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 # Defina as permissões apropriadas
 RUN chown -R www-data:www-data /var/www
 
-# Exponha a porta 9000
+# Exponha a porta 9000 e inicie o servidor PHP-FPM
 EXPOSE 9000
-
 CMD ["php-fpm"]
