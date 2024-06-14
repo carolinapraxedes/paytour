@@ -39,6 +39,9 @@ RUN composer install --prefer-dist --no-scripts --no-interaction
 # Instala as dependências do NPM
 RUN npm install 
 
+# Build do Tailwind CSS
+RUN npm run build
+
 # Copie o arquivo de configuração do PHP-FPM
 COPY ./docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
