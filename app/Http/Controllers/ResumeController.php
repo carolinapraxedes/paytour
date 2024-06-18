@@ -35,7 +35,35 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'position' => 'required|max:255',
+            'education' => 'required|in:ens_medio_incom,ens_medio_com,grad_incom,grad_com,pos_grad_incom,pos_grad_com',
+            'resume'=> 'required|file|mimes:pdf,doc,docx|max:1024' ,
+        ];
+
+        $messages = [
+            'name.required' => 'Por favor, preencha o campo Nome',
+            'name.max' => 'O limite máximo de caracteres para o campo Nome é 255',
+
+            'email.required' => 'Por favor, preencha o campo E-mail',
+            'email.email' => 'Informe um email válido!',
+
+            'position.required' => 'Por favor, preencha o campo Cargo desejado',
+            'position.max' => 'O limite máximo de caracteres para o campo Cargo desejado é 255',
+
+            'education.required' => 'Por favor, selecione uma opção no campo Escolaridade',
+            'education.in' => 'Selecione uma opção válida para o campo Escolaridade',
+            
+            'resume.required' => 'Por favor, envie o seu currículo',
+            'resume.mimes' => 'O currículo deve ser um arquivo do tipo: pdf, doc, docx',
+            'resume.max' => 'O currículo não deve exceder 1MB'
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
+
+        $ip = $request->ip();
     }
 
     /**
