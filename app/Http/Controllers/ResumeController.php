@@ -14,7 +14,7 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        
+        return view('welcome');
     }
 
     /**
@@ -24,8 +24,9 @@ class ResumeController extends Controller
      */
     public function create()
     {
-        return view('welcome');
+        return view('create');
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +41,7 @@ class ResumeController extends Controller
             'email' => 'required|email',
             'position' => 'required|max:255',
             'education' => 'required|in:ens_medio_incom,ens_medio_com,grad_incom,grad_com,pos_grad_incom,pos_grad_com',
-            'resume'=> 'required|file|mimes:pdf,doc,docx|max:1024' ,
+            'resume'=> 'required|file|mimes:pdf,doc,docx|max:1024',
         ];
 
         $messages = [
@@ -62,8 +63,20 @@ class ResumeController extends Controller
         ];
 
         $validatedData = $request->validate($rules, $messages);
+        $resumePath = $request->file('resume')->store('resumes');
 
-        $ip = $request->ip();
+
+        $candidate = new Resume;
+        $candidate->name = $validatedData['name'];
+        $candidate->email = $validatedData['email'];
+        $candidate->position = $validatedData['position'];
+        $candidate->education = $validatedData['education'];
+        $candidate->resume_path = $resumePath;
+        $candidate->ip = $request->ip();
+        $candidate->save();
+
+        return redirect(route('index'))->with('success', 'Dados salvos com sucesso!');
+
     }
 
     /**

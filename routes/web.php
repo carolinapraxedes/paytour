@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', [ResumeController::class, 'create'])->name('create');
-Route::post('/', [ResumeController::class, 'store'])->name('store');
+Route::get('/', [ResumeController::class, 'index'])->name('index');
+Route::get('/create', [ResumeController::class, 'create'])->name('create');
+Route::post('/create', [ResumeController::class, 'store'])->name('store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
