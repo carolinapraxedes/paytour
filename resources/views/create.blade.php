@@ -18,7 +18,7 @@
             <h2>Paytour</h2>
         </header>
         <main>
-            <div class="bg-light p-4 mt-5">
+            <div class="bg-light shadow p-3 mb-5 bg-body-tertiary rounded-4 p-4 mt-5">
                 <form role="form" action="{{ route('store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group my-3">
@@ -58,8 +58,8 @@
                         <input id="resume" type="file" name="resume" class="form-control-file" value="{{ old('position') }}" >
                         @error('resume') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
-                    <div class="d-flex flex-row align-items-center mt-5">
-                        <button type="submit" class="btn btn-primary  ">Registrar</button>
+                    <div class="d-flex flex-row justify-content-center mt-5">
+                        <button type="submit" class="btn btn-primary me-2">Enviar</button>
                         <a href="{{route('index')}}" class="btn btn-danger ">Cancelar</a>
 
                     </div>
