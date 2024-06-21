@@ -3,12 +3,7 @@ FROM php:8.2-fpm
 
 # Instale dependências do sistema
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libonig-dev \
-    libxml2-dev \
+
     zip \
     unzip \
     git \

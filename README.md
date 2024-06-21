@@ -1,8 +1,17 @@
-comandos para rodar:
-```docker-compose down```
-```docker-compose build```
-```docker-compose up -d```
-```docker ps``` - lista os containers em andandamento
-```docker ps -a``` - lista os containers em andandamento e historico
-```docker exec -ti 357 bash``` - entra no sistema bash. o 357 é o id do container
-```mysql -u root -p``` - comando para acessar o mysql dentro do bash
+## Comandos para rodar pelo Docker:
+
+- ```docker-compose down``` - para os containers
+- ```docker-compose build``` - build da imagem
+- ```docker-compose up -d``` - para subir os containers
+- ```mysql -u root -p``` - comando para acessar o MySQL dentro do bash
+
+## Passos para rodar localmente:
+
+1. Conecte ao banco desejado.
+2. Execute ```composer install``` ou ```composer update```.
+3. Execute ```php artisan migrate```.
+4. Execute ```php artisan serve```.
+
+## Comando para rodar os testes:
+
+```./vendor/bin/phpunit tests/Feature/ResumeControllerTest.php

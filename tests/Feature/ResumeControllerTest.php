@@ -31,11 +31,10 @@ class ResumeControllerTest extends TestCase
             'resume' => '', // Não é necessário enviar arquivo para teste de validação
         ];
 
-        $response = $this->call('POST', route('store'), $data);
+        $response = $this->post(route('store'), $data);
 
-        $this->assertEquals(302, $response->getStatusCode()); // Verifica status HTTP 302 (redirecionamento)
-        $this->assertArrayHasKey('errors', $response->exception->getMessage()); // Verifica se a mensagem de erro contém 'errors'
-        $this->assertArrayHasKey('name', $response->exception->getMessage()); // Verifica se a mensagem de erro menciona o campo 'name'
+        $response->assertStatus(302); // Verifica status HTTP 302 (redirecionamento)
+        $response->assertSessionHasErrors(['name']); // Verifica se a sessão contém erros para o campo 'name'
     }
 
     public function test_invalidated_email()
@@ -49,11 +48,10 @@ class ResumeControllerTest extends TestCase
             'resume' => '', // Não é necessário enviar arquivo para teste de validação
         ];
 
-        $response = $this->call('POST', route('store'), $data);
+        $response = $this->post(route('store'), $data);
 
-        $this->assertEquals(302, $response->getStatusCode()); // Verifica status HTTP 302 (redirecionamento)
-        $this->assertArrayHasKey('errors', $response->exception->getMessage()); // Verifica se a mensagem de erro contém 'errors'
-        $this->assertArrayHasKey('email', $response->exception->getMessage()); // Verifica se a mensagem de erro menciona o campo 'email'
+        $response->assertStatus(302); // Verifica status HTTP 302 (redirecionamento)
+        $response->assertSessionHasErrors(['email']); // Verifica se a sessão contém erros para o campo 'email'
     }
 
     public function test_empty_education()
@@ -67,12 +65,9 @@ class ResumeControllerTest extends TestCase
             'resume' => '', // Não é necessário enviar arquivo para teste de validação
         ];
 
-        $response = $this->call('POST', route('store'), $data);
+        $response = $this->post(route('store'), $data);
 
-        $this->assertEquals(302, $response->getStatusCode()); // Verifica status HTTP 302 (redirecionamento)
-        $this->assertArrayHasKey('errors', $response->exception->getMessage()); // Verifica se a mensagem de erro contém 'errors'
-        $this->assertArrayHasKey('education', $response->exception->getMessage()); // Verifica se a mensagem de erro menciona o campo 'education'
+        $response->assertStatus(302); // Verifica status HTTP 302 (redirecionamento)
+        $response->assertSessionHasErrors(['education']); // Verifica se a sessão contém erros para o campo 'education'
     }
-
-
 }
