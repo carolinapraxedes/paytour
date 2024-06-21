@@ -14,4 +14,4 @@
 
 ## Comando para rodar os testes:
 
-```./vendor/bin/phpunit tests/Feature/ResumeControllerTest.php
+```./vendor/bin/phpunit tests/Feature/ResumeControllerTest.php```
